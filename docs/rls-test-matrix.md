@@ -49,3 +49,37 @@ GitHub user: guillenemily4-debug
 Responsibility: Security review, RLS test planning, and documentation.
 
 Next steps: Execute tests, record actual results, and submit changes for peer review.
+
+## RLS Test Results
+
+Environment: Separate Supabase development project,
+lab5-rls-test.
+
+Testing method: SQL Editor with simulated database
+roles and JWT claims.
+
+| Test | Actual Result | Status |
+|---|---|---|
+| Anonymous SELECT privilege | Granted | PASS |
+| Anonymous INSERT privilege | Not granted | PASS |
+| Owner reads own draft | Visible | PASS |
+| Owner reads published listing | Visible | PASS |
+| Owner reads another user's draft | Hidden | PASS |
+| Owner updates own draft | 1 row updated | PASS |
+| Owner updates published listing | 0 rows updated | PASS |
+| Owner updates another user's draft | 0 rows updated | PASS |
+| Owner deletes own draft | 1 row affected | PASS |
+| Owner deletes published listing | 0 rows affected | PASS |
+| Owner deletes another user's draft | 0 rows affected | PASS |
+| Owner inserts draft | Allowed | PASS |
+| Owner inserts published listing | RLS error 42501 | PASS |
+
+### Additional Verification Needed
+- Anonymous access with published and draft test records.
+- Other-user authenticated access tests.
+- Administrator access tests.
+- Service-role access tests.
+- Real application/API authentication tests.
+
+All UPDATE and DELETE test changes were rolled
+back to preserve test data.
