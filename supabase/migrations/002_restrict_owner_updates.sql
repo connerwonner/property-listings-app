@@ -31,3 +31,17 @@ using (
   auth.uid() = owner_id
   and status = 'draft'
 );
+
+-- Require new owner-created properties to start as drafts
+
+drop policy if exists "properties_insert_own"
+on public.properties;
+
+create policy "properties_insert_own"
+on public.properties
+for insert
+to authenticated
+with check (
+  auth.uid() = owner_id
+  and status = 'draft'
+);
