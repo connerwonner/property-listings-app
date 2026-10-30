@@ -83,3 +83,33 @@ roles and JWT claims.
 
 All UPDATE and DELETE test changes were rolled
 back to preserve test data.
+
+## Additional RLS Verification Results
+
+Test environment: lab5-rls-test (Supabase)
+
+| Security Test | Actual Result | Status |
+|---|---|---|
+| Other user reads own draft | Visible | PASS |
+| Other user reads owner's private draft | Hidden | PASS |
+| Other user reads published listing | Visible | PASS |
+| Anonymous user reads published listing | Visible | PASS |
+| Anonymous user reads private drafts | Hidden | PASS |
+| Simulated administrator reads all properties | 3 rows visible | PASS |
+| Simulated service role reads all properties | 3 rows visible | PASS |
+
+## Testing Notes
+
+- Tests were performed in a separate Supabase development project.
+- Database roles and JWT claims were simulated using SQL Editor.
+- Fictional property records were used.
+- No production database was modified.
+- Administrator and service-role visibility tests passed.
+- Real application authentication and administrator claim protection still require verification.
+- Additional write-permission and secret-hygiene checks remain pending.
+
+## Individual Contribution
+
+GitHub username: guillenemily4-debug
+
+Completed database security testing, documented access-control results, and submitted RLS improvements for peer review.
